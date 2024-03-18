@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déploiement d'instance OpenStack</title>
+    <style>
+        /* Votre style CSS ici */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Déploiement d'instance OpenStack</h1>
+        <form id="instanceForm">
+            <label for="instanceName">Nom de l'instance:</label>
+            <input type="text" id="instanceName" name="instanceName" required>
+            <label for="flavor">Flavor:</label>
+            <select id="flavor" name="flavor" required>
+                <option value="small">Petit</option>
+                <option value="medium">Moyen</option>
+                <option value="large">Grand</option>
+            </select>
+            <label for="image">Image:</label>
+            <select id="image" name="image" required>
+                <option value="ubuntu">Ubuntu</option>
+                <option value="centos">CentOS</option>
+                <option value="debian">Debian</option>
+            </select>
+            <button type="submit">Déployer l'instance</button>
+        </form>
+    </div>
+    
+    <script>
+        document.getElementById("instanceForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            
+            // Récupérer les valeurs des champs du formulaire
+            var instanceName = document.getElementById("instanceName").value;
+            var flavor = document.getElementById("flavor").value;
+            var image = document.getElementById("image").value;
+            
+            // Envoyer les données au backend pour le déploiement de l'instance
+            fetch("https://votre-backend.com/deploy-instance", { // Remplacez l'URL par celle de votre backend
+                method: "POST",
+                body: JSON.stringify({
+                    instanceName: instanceName,
+                    flavor: flavor,
+                    image: image
+                }),
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            })
+            .then(function(response) {
+                if (response.ok) {
+                    alert("Instance déployée avec succès !");
+                } else {
+                    alert("Erreur lors du déploiement de l'instance.");
+                }
+            })
+            .catch(function(error) {
+                console.error("Erreur:", error);
+                alert("Une erreur s'est produite. Veuillez réessayer.");
+            });
+        });
+    </script>
+</body>
+</html>
