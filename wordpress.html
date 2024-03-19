@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Déploiement d'instance sur OpenStack</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f3f3f3;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="submit"] {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+
+        #response {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #f0f0f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Déploiement d'instance sur OpenStack</h1>
+        <form id="deploymentForm">
+            <label for="instanceName">Nom de l'instance :</label><br>
+            <input type="text" id="instanceName" name="instanceName" required><br><br>
+
+            <label for="flavor">Taille de l'instance :</label><br>
+            <select id="flavor" name="flavor" required>
+                <option value="small">Petite</option>
+                <option value="medium">Moyenne</option>
+                <option value="large">Grande</option>
+            </select><br><br>
+
+            <label for="image">Image :</label><br>
+            <select id="image" name="image" required>
+                <option value="wordpress">WordPress</option>
+                <!-- Autres images disponibles -->
+            </select><br><br>
+
+            <input type="submit" value="Déployer">
+        </form>
+
+        <div id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById("deploymentForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            var formData = new FormData(this);
+            var jsonData = {};
+            formData.forEach(function(value, key){
+                jsonData[key] = value;
+            });
+
+            fetch('/openstack-api/deploy-instance', {
+                method: 'POST',
+                body: JSON.stringify(jsonData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById("response").innerHTML = "Instance déployée avec succès. ID de l'instance : " + data.instance_id;
+            })
+            .catch(error => {
+                document.getElementById("response").innerHTML = "Une erreur s'est produite lors du déploiement de l'instance : " + error;
+            });
+        });
+    </script>
+</body>
+</html>
