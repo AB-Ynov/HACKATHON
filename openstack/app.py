@@ -2,17 +2,16 @@ from flask import Flask, jsonify
 
 app = Flask(__name__)
 
-# Endpoint pour récupérer les informations des VMs
-@app.route('/openstack/vms')
+# Exemple de données de machines virtuelles OpenStack
+openstack_vms = [
+    {"name": "VM1", "status": "Running", "ip": "192.168.1.101"},
+    {"name": "VM2", "status": "Stopped", "ip": "192.168.1.102"},
+    {"name": "VM3", "status": "Running", "ip": "192.168.1.103"}
+]
+
+@app.route('/openstack', methods=['GET'])
 def get_openstack_vms():
-    # Ici, vous devrez intégrer la logique pour récupérer les informations des VMs d'OpenStack
-    # Par exemple, en utilisant la bibliothèque python-openstackclient ou en interagissant directement avec l'API OpenStack
-    # Pour l'exemple, nous renvoyons des données statiques
-    vms = [
-        {"name": "VM1", "status": "Running"},
-        {"name": "VM2", "status": "Stopped"}
-    ]
-    return jsonify(vms)
+    return jsonify(openstack_vms)
 
 if __name__ == '__main__':
     app.run(debug=True)
