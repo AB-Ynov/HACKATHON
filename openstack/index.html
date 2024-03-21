@@ -10,6 +10,13 @@
     <h1>Liste des VMs OpenStack</h1>
     <ul id="vm-list"></ul>
 
+    <h2>Créer une nouvelle VM</h2>
+    <form id="create-vm-form">
+        <label for="vm-name">Nom de la VM :</label>
+        <input type="text" id="vm-name" name="vm-name">
+        <button type="submit">Créer</button>
+    </form>
+
     <script>
         // Fonction pour récupérer les VMs depuis l'API Flask
         async function fetchOpenStackVMs() {
@@ -26,13 +33,35 @@
             const vms = await fetchOpenStackVMs();
             vms.forEach(vm => {
                 const listItem = document.createElement('li');
-                listItem.textContent = `${vm.name} - ${vm.status}`;
+                listItem.textContent = `${vm.name} - ${vm.status} (Créé le ${vm.created_at})`;
                 vmList.appendChild(listItem);
             });
         }
 
+        // Fonction pour soumettre le formulaire de création de VM
+        async function createVM(event) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const vmName = formData.get('vm-name');
+            const response = await fetch('/openstack/vms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ name: vmName })
+            });
+            if (response.ok) {
+                displayOpenStackVMs();
+            } else {
+                console.error('Erreur lors de la création de la VM');
+            }
+        }
+
         // Appel de la fonction pour afficher les VMs au chargement de la page
         displayOpenStackVMs();
+
+        // Ajout d'un écouteur d'événement pour soumettre le formulaire de création de VM
+        document.getElementById('create-vm-form').addEventListener('submit', createVM);
     </script>
 </body>
 </html>
