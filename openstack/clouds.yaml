@@ -1,9 +1,0 @@
-clouds:
-  devstack:
-    auth:
-      auth_url: http://100.122.53.57:5000/v3
-      username: test_api
-      password: password
-      project_name: admin
-      user_domain_name: Default
-      project_domain_name: Default
