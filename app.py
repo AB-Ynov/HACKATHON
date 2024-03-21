@@ -1,36 +1,28 @@
 from flask import Flask, jsonify
-from openstack import connection
+import openstack
 
+# Initialiser l'application Flask
 app = Flask(__name__)
 
 # Configuration OpenStack
-auth_url = 'https://<OPENSTACK_AUTH_URL>'
-project_name = '<PROJECT_NAME>'
-username = '<USERNAME>'
-password = '<PASSWORD>'
-user_domain_name = '<USER_DOMAIN_NAME>'
-project_domain_name = '<PROJECT_DOMAIN_NAME>'
+openstack.enable_logging(debug=True)
+conn = openstack.connect(cloud='openstack')  # Assurez-vous de configurer vos informations de connexion OpenStack
 
-# Connexion à OpenStack
-conn = connection.Connection(
-    auth_url=auth_url,
-    project_name=project_name,
-    username=username,
-    password=password,
-    user_domain_name=user_domain_name,
-    project_domain_name=project_domain_name
-)
-
+# Route pour obtenir les VMs actives
 @app.route('/vms', methods=['GET'])
-def get_vms():
-    # Récupérer les machines virtuelles actives
-    vms = conn.compute.servers()
+def get_active_vms():
+    try:
+        # Récupérer la liste des VMs
+        vms = conn.list_servers()
 
-    # Créer une liste de noms de machines virtuelles
-    vm_names = [vm.name for vm in vms]
+        # Filtrer les VMs actives
+        active_vms = [vm.name for vm in vms if vm.status == 'ACTIVE']
 
-    # Retourner la liste de noms de machines virtuelles en tant que réponse JSON
-    return jsonify(vm_names)
+        # Renvoyer la liste des noms de VMs actives au format JSON
+        return jsonify(active_vms), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
+# Point d'entrée de l'application
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
