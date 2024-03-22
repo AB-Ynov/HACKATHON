@@ -32,3 +32,13 @@ L'API sera alors accessible à l'adresse `http://localhost:5000/vms`.
 ## Utilisation
 
 Lorsque vous accédez à l'URL de l'API, vous obtiendrez une liste des noms des machines virtuelles actives au format JSON.
+
+## Page HTML
+
+En plus de l'API, ce projet comprend également une page HTML (page.html) pour la gestion visuelle des machines virtuelles. Vous pouvez accéder à cette page pour déployer de nouvelles machines virtuelles et voir la liste des machines virtuelles actives.
+
+## Équipes
+Groupe 2:
+  Adrien BARRAL
+  Titouan VIANEZ
+  Dylan LAPORTE
