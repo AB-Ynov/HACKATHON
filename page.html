@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des machines virtuelles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    #vmStatus {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gestion des machines virtuelles</h1>
+  <form id="openstackForm">
+    <label for="instanceName">Nom de l'instance:</label>
+    <input type="text" id="instanceName" name="instanceName" required>
+    <label for="flavor">Type de ressource:</label>
+    <select id="flavor" name="flavor" required>
+      <option value="petit">Petite</option>
+      <option value="moyen">Moyenne</option>
+      <option value="grand">Grande</option>
+    </select>
+    <label for="image">Image:</label>
+    <select id="image" name="image" required>
+      <option value="ubuntu">Ubuntu</option>
+      <option value="centos">CentOS</option>
+      <option value="debian">Debian</option>
+    </select>
+    <input type="submit" value="Déployer">
+  </form>
+
+  <div id="vmStatus">
+    <h2>État des machines virtuelles</h2>
+    <p id="activeVMs">Machines virtuelles actives : </p>
+    <p id="inactiveVMs">Machines virtuelles inactives : </p>
+  </div>
+
+  <script>
+    document.getElementById('openstackForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+      var instanceName = formData.get('instanceName');
+      var flavor = formData.get('flavor');
+      var image = formData.get('image');
+
+      // Simulation du déploiement
+      alert('Instance ' + instanceName + ' de type ' + flavor + ' avec l\'image ' + image + ' déployée avec succès!');
+      
+      // Actualisation de l'état des machines virtuelles
+      updateVMStatus();
+    });
+
+    function updateVMStatus() {
+      // Supposons que vous ayez une fonction pour récupérer l'état des machines virtuelles
+      // et mettre à jour les paragraphes correspondants
+      var activeVMs = getActiveVMs();
+      var inactiveVMs = getInactiveVMs();
+
+      document.getElementById('activeVMs').textContent = 'Machines virtuelles actives : ' + activeVMs;
+      document.getElementById('inactiveVMs').textContent = 'Machines virtuelles inactives : ' + inactiveVMs;
+    }
+
+    // Fonctions de simulation pour récupérer l'état des machines virtuelles
+    function getActiveVMs() {
+      // Supposons que vous ayez une logique pour obtenir le nombre de machines virtuelles actives
+      return 5; // Par exemple
+    }
+
+    function getInactiveVMs() {
+      // Supposons que vous ayez une logique pour obtenir le nombre de machines virtuelles inactives
+      return 3; // Par exemple
+    }
+
+    // Appel initial pour afficher l'état des machines virtuelles
+    updateVMStatus();
+  </script>
+</body>
+</html>
