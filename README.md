@@ -38,7 +38,7 @@ Le hackathon est une compétition où des équipes de 3 à 4 étudiants travaill
 - **Groupe 2:**
   - Adrien BARRAL
   - Titouan VIANEZ
-  - Yassine VERRIEZ
+  - Dylan LAPORTE
 
 ## Conclusion
 Le hackathon en cybersécurité de Montpellier Ynov offre une opportunité aux étudiants de mettre en pratique leurs compétences dans un environnement stimulant. Les équipes auront pour défi de répondre à la problématique posée par l'entreprise en concevant une infrastructure informatique sécurisée pour un laboratoire pédagogique. Bonne chance à toutes les équipes participantes !
