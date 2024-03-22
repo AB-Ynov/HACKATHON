@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des machines virtuelles</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+    }
+    form {
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    label {
+      display: block;
+      margin-bottom: 5px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    input[type="submit"] {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    #vmStatus {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gestion des machines virtuelles</h1>
+  <form id="openstackForm">
+    <label for="instanceName">Nom de l'instance:</label>
+    <input type="text" id="instanceName" name="instanceName" required>
+    <label for="flavor">Type de ressource:</label>
+    <select id="flavor" name="flavor" required>
+      <option value="petit">Petite</option>
+      <option value="moyen">Moyenne</option>
+      <option value="grand">Grande</option>
+    </select>
+    <label for="image">Image:</label>
+    <select id="image" name="image" required>
+      <option value="ubuntu">Ubuntu</option>
+      <option value="centos">CentOS</option>
+      <option value="debian">Debian</option>
+    </select>
+    <input type="submit" value="Déployer">
+  </form>
+
+  <div id="vmStatus">
+    <h2>Noms des machines virtuelles actives</h2>
+    <ul id="activeVMsList"></ul>
+  </div>
+
+  <script>
+    var activeVMs = []; // Tableau pour stocker les détails des machines virtuelles actives
+
+    document.getElementById('openstackForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+      var instanceName = formData.get('instanceName');
+      var flavor = formData.get('flavor');
+      var image = formData.get('image');
+
+      // Vérifier si le nom de la VM existe déjà
+      if (!activeVMs.some(vm => vm.name === instanceName)) {
+        // Simulation du déploiement réussi
+        alert('Instance ' + instanceName + ' de type ' + flavor + ' avec l\'image ' + image + ' déployée avec succès!');
+        
+        // Ajouter les détails de la VM à la liste des machines virtuelles actives
+        activeVMs.push({ name: instanceName, flavor: flavor, image: image });
+        
+        // Mise à jour de l'affichage des détails des machines virtuelles actives
+        updateActiveVMsList();
+      } else {
+        alert('Une machine virtuelle avec le même nom existe déjà!');
+      }
+    });
+
+    function updateActiveVMsList() {
+      var activeVMsList = document.getElementById('activeVMsList');
+      activeVMsList.innerHTML = ''; // Efface la liste actuelle
+      
+      // Ajoute chaque détail de machine virtuelle actif à la liste
+      activeVMs.forEach(function(vm) {
+        var li = document.createElement('li');
+        li.textContent = 'Nom: ' + vm.name + ', Type de ressource: ' + vm.flavor + ', Image: ' + vm.image;
+        activeVMsList.appendChild(li);
+      });
+    }
+  </script>
+</body>
+</html>
