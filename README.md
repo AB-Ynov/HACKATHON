@@ -39,6 +39,6 @@ En plus de l'API, ce projet comprend également une page HTML (page.html) pour l
 
 ## Équipes
 Groupe 2:
-  Adrien BARRAL
-  Titouan VIANEZ
-  Dylan LAPORTE
+  - Titouan VIANEZ
+  - Dylan LAPORTE
+  - Adrien BARRAL
